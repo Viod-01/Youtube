@@ -3,13 +3,6 @@ const sidebar = document.querySelector('.sidebar');
 const mainContent = document.querySelector('.content-main');
 const wrapper = document.querySelector('.wrapper');
 
-// Add transition class only after initial load to prevent layout jumps
-document.addEventListener('DOMContentLoaded', () => {
-    sidebar.style.transition = 'width 0.3s ease, left 0.3s ease';
-    mainContent.style.transition = 'left 0.3s ease, width 0.3s ease';
-    wrapper.style.transition = 'left 0.3s ease, width 0.3s ease';
-});
-
 menuIcon.addEventListener('click', function () {
     if (window.innerWidth <= 768) {
         /* Mobile mode */
