@@ -54,20 +54,23 @@ window.addEventListener("resize", () => {
 // Optimized video hover - use event delegation and reduce repaints
 const videoContainer = document.querySelector('.content-main');
 
-videoContainer?.addEventListener('mouseenter', (e) => {
-    if (e.target.classList.contains('hover-video')) {
-        e.target.muted = false;
-        e.target.play().catch(() => {});
-    }
-}, true);
+// Only add hover listeners on desktop (not mobile)
+if (window.innerWidth > 768) {
+    videoContainer?.addEventListener('mouseenter', (e) => {
+        if (e.target.classList.contains('hover-video')) {
+            // e.target.muted = false;
+            e.target.play().catch(() => {});
+        }
+    }, true);
 
-videoContainer?.addEventListener('mouseleave', (e) => {
-    if (e.target.classList.contains('hover-video')) {
-        e.target.pause();
-        e.target.currentTime = 0;
-        e.target.muted = true;
-    }
-}, true);
+    videoContainer?.addEventListener('mouseleave', (e) => {
+        if (e.target.classList.contains('hover-video')) {
+            e.target.pause();
+            e.target.currentTime = 0;
+            // e.target.muted = true;
+        }
+    }, true);
+}
 
 videoContainer?.addEventListener('click', (e) => {
     if (e.target.classList.contains('hover-video')) {
@@ -77,6 +80,7 @@ videoContainer?.addEventListener('click', (e) => {
         }
     }
 }, true);
+
 
 // Theme toggle
 document.addEventListener("DOMContentLoaded", () => {
@@ -93,3 +97,31 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 });
+
+
+// Auto-play videos on mobile when in viewport
+if (window.innerWidth < 768) {
+    const videoObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            const video = entry.target;
+            if (entry.isIntersecting) {
+                video.volume = 10;
+                video.muted = false;
+                video.play().catch(() => {
+                    video.muted = true;
+                    video.play().catch(() => {});
+                });
+            } else {
+                video.pause();
+                video.currentTime = 0;
+            }
+        });
+    }, {
+        threshold: 1.0
+    });
+
+    const videos = document.querySelectorAll('.hover-video');
+    videos.forEach((video) => {
+        videoObserver.observe(video);
+    });
+}

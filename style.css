@@ -104,9 +104,13 @@ body.light-mode .mic {
     color: #000000;
 }
 
-body.light-mode .video-stage:hover,
 body.light-mode .additional:hover,
 body.light-mode .mini-sidebar .theme-toggle:hover {
+    background-color: #f2f2f2;
+}
+
+body.light-mode .video-stage:hover {
+    height: fit-content;
     background-color: #f2f2f2;
 }
 
@@ -564,21 +568,15 @@ i {
     background-color: #f0f0f0;
 }
 
-.wrap::-webkit-scrollbar {
-    height: 6px;
+/* ==================== WRAPPER SCROLLING ==================== */
+.wrapper {
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
 }
 
-.wrap::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-.wrap::-webkit-scrollbar-thumb {
-    background: #4c4c4c;
-    border-radius: 3px;
-}
-
-.wrap::-webkit-scrollbar-thumb:hover {
-    background: #6c6c6c;
+.wrapper::-webkit-scrollbar {
+    display: none;
 }
 
 /* ==================== CONTENT MAIN ==================== */
@@ -941,6 +939,10 @@ footer {
 
 /* ==================== MOBILE MODE ==================== */
 @media (max-width: 768px) {
+    .ads {
+        margin-bottom: 10px;
+    }
+
     .nav-container {
         padding: 0 5px;
         gap: 5px;
